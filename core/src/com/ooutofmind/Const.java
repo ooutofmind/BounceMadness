@@ -6,5 +6,5 @@ public class Const {
     public static final int SCALE = 2;
 
     public static final int BLOCK_HEIGHT = 8;
-    public static final int BALL_RADIUS = 8;
+    public static final int BALL_RADIUS = 13;
 }

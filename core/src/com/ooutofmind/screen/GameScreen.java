@@ -1,34 +1,43 @@
 package com.ooutofmind.screen;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.ooutofmind.Const;
-import com.ooutofmind.gfx.Art;
+import com.ooutofmind.entity.Ball;
 import com.ooutofmind.level.Level;
 
-public class GameScreen extends AbsScreen {
+import java.util.Random;
 
+public class GameScreen extends AbsScreen {
+    private static final Random random = new Random();
     private Level level;
+    private int tickTime = 0;
 
     public GameScreen() {
-        this.level = new Level();
+        newGame();
     }
 
     public void newGame() {
+        level = new Level();
 
     }
 
     public void tick() {
+        tickTime++;
+        level.tick();
+        if (tickTime % 60 == 0) {
+            Ball b = new Ball(Const.WIDTH / 2, Const.HEIGHT / 3);
 
+            b.xa = (random.nextFloat() * 2.0f - 1.0f) * 20;
+            b.ya = (random.nextFloat() * 2.0f - 1.0f) * 20;
+            level.addEntity(b);
+        }
     }
 
     public void render(ShapeRenderer shapeRenderer) {
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        Art.circle((Const.WIDTH - (Const.BALL_RADIUS << 1)) >> 1, Const.HEIGHT / 3, Const.BALL_RADIUS, Color.RED, shapeRenderer);
-
-        Art.quad(10, Const.HEIGHT / 2, 100, 8, 2, Color.WHITE, shapeRenderer);
+        level.render(shapeRenderer);
 
         shapeRenderer.end();
     }
