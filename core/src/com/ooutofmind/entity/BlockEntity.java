@@ -8,7 +8,6 @@ public class BlockEntity extends Entity {
 
     public BlockEntity(float x, float y, int w) {
         super(x, y);
-        this.h = Const.BLOCK_HEIGHT;
         this.w = w;
         this.h = Const.BLOCK_HEIGHT;
     }
