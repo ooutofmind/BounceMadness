@@ -1,9 +1,9 @@
 package com.ooutofmind.level;
 
-import com.ooutofmind.entity.BlockEntity;
+import com.ooutofmind.entity.DamageBlockEntity;
 
 import java.util.List;
 
 public interface LevelGen {
-    List<BlockEntity> getNextBlockChunk(int chunkSize);
+    List<List<DamageBlockEntity>> getNextBlockChunk(int chunkSize);
 }
