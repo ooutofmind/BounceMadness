@@ -28,14 +28,25 @@ public class Platform extends Entity {
     }
 
     @Override
+    public boolean blocks(Entity e) {
+        return e instanceof Ball;
+    }
+
+    @Override
     public void tick() {
 
     }
 
     @Override
+    public boolean intersects(float x0, float y0, float x1, float y1) {
+        //TODO!!!!!
+        return false;
+    }
+
+    @Override
     public void render(ShapeRenderer shapeRenderer) {
         float holeCenterX = Const.WIDTH / 2F + holeEntity.x;
-        Art.quad((int) x, (int) y, (int)(holeCenterX - (holeEntity.w /2F)), 5, 0, GRAY, shapeRenderer);
-        Art.quad((int)(holeCenterX + (holeEntity.w /2F)), (int) y, (int)(Const.WIDTH - holeCenterX + (holeEntity.w /2F)), 5, 0, GRAY, shapeRenderer);
+        Art.quad((int) x, (int) y, (int) (holeCenterX - (holeEntity.w / 2F)), 5, 0, GRAY, shapeRenderer);
+        Art.quad((int) (holeCenterX + (holeEntity.w / 2F)), (int) y, (int) (Const.WIDTH - holeCenterX + (holeEntity.w / 2F)), 5, 0, GRAY, shapeRenderer);
     }
 }

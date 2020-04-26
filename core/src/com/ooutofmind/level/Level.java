@@ -32,4 +32,21 @@ public class Level {
     public void render(final ShapeRenderer shapeRenderer) {
         entities.forEach(e -> e.render(shapeRenderer));
     }
+
+    public interface EntityFilter {
+        boolean accept(Entity e);
+    }
+
+    public List<Entity> getEntities(Entity owner, float x0, float y0, float x1, float y1, EntityFilter filter) {
+        List<Entity> result = EntityListPool.get();
+        for (Entity e : entities) {
+            if (e == owner) continue;
+            if (filter != null && !filter.accept(e)) continue;
+            if (e.intersects(x0, y0, x1, y1)) {
+                result.add(e);
+            }
+        }
+
+        return result;
+    }
 }

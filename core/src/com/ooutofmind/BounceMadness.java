@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.ooutofmind.level.EntityListPool;
 import com.ooutofmind.screen.AbsScreen;
 import com.ooutofmind.screen.GameScreen;
 
@@ -47,7 +48,7 @@ public class BounceMadness extends Game {
 
     @Override
     public void render() {
-
+        EntityListPool.reset();
         ///
         ((AbsScreen) screen).tick();
         ///
