@@ -1,11 +1,9 @@
 package com.ooutofmind.entity;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.ooutofmind.Const;
 
 public class BlockEntity extends Entity {
-    public int w;
-    public int h;
 
 
     public BlockEntity(float x, float y, int w) {
@@ -20,7 +18,7 @@ public class BlockEntity extends Entity {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(ShapeRenderer shapeRenderer) {
 
     }
 }
