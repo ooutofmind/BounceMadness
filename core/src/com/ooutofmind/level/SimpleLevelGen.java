@@ -13,15 +13,15 @@ public class SimpleLevelGen implements LevelGen {
     private final Random random = new Random();
     private int directionCountDown;
     private int direction = 0;
-    private int platformYOffset = 0;
-    private Platform lastPlatform = new Platform(new HoleEntity(0, 0, HoleEntity.MIN_WIDTH), null);
+    private int platformYOffset = 100;
+    private Platform lastPlatform = new Platform(0, new HoleEntity(0, 0, HoleEntity.MIN_WIDTH), null);
 
     @Override
     public List<Platform> getNextBlockChunk(int chunkSize) {
         List<Platform> generated = new ArrayList<>(chunkSize);
         for (int i = 0; i < chunkSize; i++) {
             HoleEntity holeEntity = createHole();
-            lastPlatform = new Platform(holeEntity, null);
+            lastPlatform = new Platform(lastPlatform.y + platformYOffset, holeEntity, null);
             generated.add(lastPlatform);
         }
 

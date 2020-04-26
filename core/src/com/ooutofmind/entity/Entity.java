@@ -11,7 +11,7 @@ public abstract class Entity {
     public float ya;
     public float w;
     public float h;
-    public float bounce = 0.90f; //TODO bounce should be depended on surface
+    public float bounce = 0.98f; //TODO bounce should be depended on surface
     public Level level;
     public boolean removed = false;
 
@@ -53,15 +53,13 @@ public abstract class Entity {
         ya += level.gravity;
     }
 
-    private boolean canMove(float xxa, float yya) {
+    protected boolean canMove(float xxa, float yya) {
         float x0 = x + xxa - w / 2;
         float x1 = x + xxa + w / 2;
         float y0 = y + yya - h / 2;
         float y1 = y + yya + h / 2;
 
-        if (y1 > Const.HEIGHT || x0 < 0 || x1 > Const.WIDTH) return false;
-
-        return true;
+        return !(y1 > Const.HEIGHT) && !(x0 < 0) && !(x1 > Const.WIDTH);
     }
 
     public abstract void tick();
