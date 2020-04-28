@@ -6,7 +6,7 @@ import com.ooutofmind.Const;
 import com.ooutofmind.gfx.Art;
 
 public class Ball extends Entity {
-    public static final int MAX_SPEED = 15;
+    public static final int MAX_SPEED = 9;
     public float bounce = 1f;
 
     public Ball(float x, float y) {

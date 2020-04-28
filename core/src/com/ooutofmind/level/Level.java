@@ -28,10 +28,9 @@ public class Level {
         for (Iterator<Entity> it = entities.iterator(); it.hasNext(); ) {
             Entity e = it.next();
 
+            if (!e.removed) e.tick();
             if (e.removed) {
                 it.remove();
-            } else {
-                e.tick();
             }
         }
     }
