@@ -4,12 +4,20 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.ooutofmind.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Level {
     private final List<Entity> entities = new ArrayList<>();
 
-    public float gravity = 0.16554f;
+    public float gravity = 0.98f;
+    public int xOffset = 0;
+    public int yOffset = 0;
+
+    public void setOffset(int xOffset, int yOffset) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+    }
 
     public void addEntity(Entity e) {
         entities.add(e);
@@ -17,18 +25,34 @@ public class Level {
     }
 
     public void tick() {
-        for (int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
+        for (Iterator<Entity> it = entities.iterator(); it.hasNext(); ) {
+            Entity e = it.next();
+
             if (!e.removed) e.tick();
             if (e.removed) {
-                entities.remove(i--);
+                it.remove();
             }
         }
     }
 
-    public void render(ShapeRenderer shapeRenderer) {
-        for (Entity e: entities) {
-            e.render(shapeRenderer);
+    public void render(final ShapeRenderer shapeRenderer) {
+        entities.forEach(e -> e.render(shapeRenderer));
+    }
+
+    public interface EntityFilter {
+        boolean accept(Entity e);
+    }
+
+    public List<Entity> getEntities(Entity owner, float x0, float y0, float x1, float y1, EntityFilter filter) {
+        List<Entity> result = EntityListPool.get();
+        for (Entity e : entities) {
+            if (e == owner) continue;
+            if (filter != null && !filter.accept(e)) continue;
+            if (e.intersects(x0, y0, x1, y1)) {
+                result.add(e);
+            }
         }
+
+        return result;
     }
 }

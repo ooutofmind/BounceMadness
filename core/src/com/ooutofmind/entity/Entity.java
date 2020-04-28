@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.ooutofmind.Const;
 import com.ooutofmind.level.Level;
 
+import java.util.List;
+
 public abstract class Entity {
     public float x;
     public float y;
@@ -11,7 +13,7 @@ public abstract class Entity {
     public float ya;
     public float w;
     public float h;
-    public float bounce = 0.90f; //TODO bounce should be depended on surface
+    public float bounce = 0.98f; //TODO bounce should be depended on surface
     public Level level;
     public boolean removed = false;
 
@@ -53,15 +55,40 @@ public abstract class Entity {
         ya += level.gravity;
     }
 
-    private boolean canMove(float xxa, float yya) {
+    protected boolean canMove(float xxa, float yya) {
         float x0 = x + xxa - w / 2;
         float x1 = x + xxa + w / 2;
         float y0 = y + yya - h / 2;
         float y1 = y + yya + h / 2;
 
-        if (y1 > Const.HEIGHT || x0 < 0 || x1 > Const.WIDTH) return false;
+        List<Entity> intersects = level.getEntities(this, x0, y0, x1, y1, e -> e instanceof Platform);
 
-        return true;
+        for (Entity e : intersects) {
+            e.touchedBy(this);
+            this.touch(e);
+            if (e.blocks(this)) {
+                return false;
+            }
+        }
+
+        return !(y1 > Const.HEIGHT) && !(x0 < 0) && !(x1 > Const.WIDTH);
+    }
+
+    public void touchedBy(Entity e) {
+
+    }
+
+    public void touch(Entity e) {
+
+    }
+
+    public boolean blocks(Entity e) {
+        return false;
+    }
+
+
+    public boolean intersects(float x0, float y0, float x1, float y1) {
+        return !(x - w / 2 > x1) && !(x + w / 2 < x0) && !(y - h / 2 > y1) && !(y + h / 2 < y0);
     }
 
     public abstract void tick();

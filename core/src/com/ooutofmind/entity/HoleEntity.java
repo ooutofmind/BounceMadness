@@ -3,7 +3,7 @@ package com.ooutofmind.entity;
 import com.ooutofmind.Const;
 
 public class HoleEntity extends BlockEntity {
-    public static final int MIN_WIDTH = Const.BALL_RADIUS + 2;
+    public static final int MIN_WIDTH = Const.BALL_RADIUS * 5 + 2;
 
     public HoleEntity(float x, float y, int w) {
         super(x, y, w);
@@ -16,7 +16,6 @@ public class HoleEntity extends BlockEntity {
                 ", h=" + h +
                 ", x=" + x +
                 ", y=" + y +
-                ", xa=" + xa +
                 ", ya=" + ya +
                 ", level=" + level +
                 '}';

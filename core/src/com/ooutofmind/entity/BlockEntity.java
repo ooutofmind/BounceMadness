@@ -5,7 +5,6 @@ import com.ooutofmind.Const;
 
 public class BlockEntity extends Entity {
 
-
     public BlockEntity(float x, float y, int w) {
         super(x, y);
         this.w = w;
