@@ -11,6 +11,13 @@ public class Level {
     private final List<Entity> entities = new ArrayList<>();
 
     public float gravity = 0.98f;
+    public int xOffset = 0;
+    public int yOffset = 0;
+
+    public void setOffset(int xOffset, int yOffset) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+    }
 
     public void addEntity(Entity e) {
         entities.add(e);

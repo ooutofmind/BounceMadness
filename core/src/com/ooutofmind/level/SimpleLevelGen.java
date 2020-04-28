@@ -29,7 +29,7 @@ public class SimpleLevelGen implements LevelGen {
     }
 
     private HoleEntity createHole() {
-        HoleEntity lastHole = lastPlatform.getHoleEntity();
+        HoleEntity lastHole = lastPlatform.hole;
         return new HoleEntity(lastHole.x + genShift(), lastHole.y + platformYOffset, genHoleWidth());
     }
 
