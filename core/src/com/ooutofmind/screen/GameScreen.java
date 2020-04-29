@@ -27,14 +27,14 @@ public class GameScreen extends AbsScreen {
         Ball b = new Ball(Const.WIDTH / 2F, 0);
         level.addEntity(b);
 
-        levelGen.getNextBlockChunk(5)
+        levelGen.getNextBlockChunk(6)
                 .forEach(level::addEntity);
     }
 
     public void tick() {
         level.tick();
 
-        float scrollSpeed = 2.52f;
+        float scrollSpeed = 1.82f;
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) xOffsetA -= scrollSpeed;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) xOffsetA += scrollSpeed;
 
