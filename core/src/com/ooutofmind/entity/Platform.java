@@ -1,22 +1,39 @@
 package com.ooutofmind.entity;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.ooutofmind.gfx.Art;
+import com.ooutofmind.Const;
 import com.ooutofmind.gfx.BB;
+import com.ooutofmind.level.Level;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static com.badlogic.gdx.graphics.Color.GREEN;
 
 public class Platform extends Entity {
     public HoleEntity hole;
-    public List<BlockEntity> entities;
+    public List<BlockEntity> entities = new ArrayList<>();
+    public BlockEntity left;
+    public BlockEntity right;
+
     public BB bb = BB.get();
 
-    public Platform(float y, HoleEntity hole, List<BlockEntity> entities) {
-        super(0, y);
-        this.entities = entities;
+    public Platform(HoleEntity hole) {
+        super(0, hole.y);
+
+        this.h = hole.h;
         this.hole = hole;
+
+        left = new BlockEntity(0, y, (int) hole.x);
+        right = new BlockEntity(hole.x + hole.w, y, Const.WIDTH - (int) (hole.x + hole.w));
+    }
+
+    @Override
+    public void init(Level level) {
+        super.init(level);
+
+        left.init(level);
+        right.init(level);
+
+        entities.forEach(e -> e.init(level));
     }
 
     @Override
@@ -33,20 +50,34 @@ public class Platform extends Entity {
     public boolean intersects(float x0, float y0, float x1, float y1) {
         this.bb = BB.get();
 
-        float xx = hole.x + level.xOffset;
-        float yy = y;
+        boolean intersects;
+
+        for (Entity e : entities) {
+            intersects = bbOf(e).intersects(x0, y0, x1, y1);
+            if (intersects) return true;
+        }
+
+        intersects = bbOf(left).intersects(x0, y0, x1, y1);
+        if (intersects) return true;
+
+        intersects = bbOf(right).intersects(x0, y0, x1, y1);
+        return intersects;
+    }
+
+    private BB bbOf(Entity e) {
+        bb = bb.identity();
+        float xx = e.x + level.xOffset;
+        float yy = e.y;
         bb.add(xx, yy);
-        bb.add(xx + hole.w, yy + hole.h);
-
-
-        return bb.intersects(x0, y0, x1, y1);
+        bb.add(xx + e.w, yy + e.h);
+        return bb;
     }
 
     @Override
     public void render(ShapeRenderer shapeRenderer) {
-        // float cx = level.xOffset + hole.x;
-        //Art.quad((int) x, (int) y, (int) (cx - (hole.w / 2F)), Const.BLOCK_HEIGHT, 1, WHITE, shapeRenderer);
-        // Art.quad((int) (cx + (hole.w / 2F)), (int) y, (int) (Const.WIDTH - cx + (hole.w / 2F)), Const.BLOCK_HEIGHT, 1, WHITE, shapeRenderer);
-        Art.quad((int) bb.x0, (int) bb.y0, (int) bb.w(), (int) bb.h(), 1, GREEN, shapeRenderer);
+        left.render(shapeRenderer);
+        right.render(shapeRenderer);
+
+        entities.forEach(e -> e.render(shapeRenderer));
     }
 }
