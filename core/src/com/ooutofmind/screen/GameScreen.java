@@ -8,10 +8,7 @@ import com.ooutofmind.Const;
 import com.ooutofmind.entity.Ball;
 import com.ooutofmind.level.Level;
 
-import java.util.Random;
-
 public class GameScreen extends AbsScreen {
-    private static final Random random = new Random();
     private Level level;
     private float xOffsetA = 0;
     private float xOffset = 0;

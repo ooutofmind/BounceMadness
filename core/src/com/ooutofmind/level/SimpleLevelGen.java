@@ -16,6 +16,10 @@ public class SimpleLevelGen implements LevelGen {
     private int platformYOffset = 0;
     private Platform lastPlatform;
 
+    public SimpleLevelGen(long seed) {
+        random.setSeed(seed);
+    }
+
     @Override
     public List<Platform> getNextBlockChunk(int chunkSize) {
         List<Platform> generated = new ArrayList<>(chunkSize);

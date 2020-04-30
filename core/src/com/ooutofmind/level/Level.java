@@ -16,7 +16,7 @@ public class Level {
     public int xOffset = 0;
     public int yOffset = 0;
 
-    private SimpleLevelGen levelGen = new SimpleLevelGen();
+    private SimpleLevelGen levelGen = new SimpleLevelGen(12412412L);
 
     public void setOffset(int xOffset, int yOffset) {
         this.xOffset = xOffset;
