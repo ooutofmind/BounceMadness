@@ -10,14 +10,14 @@ import java.util.Random;
 
 public class SimpleLevelGen implements LevelGen {
 
-    private final Random random = new Random();
+    private final Random random;
     private int directionCountDown;
     private int direction = 0;
     private int platformYOffset = 0;
     private Platform lastPlatform;
 
     public SimpleLevelGen(long seed) {
-        random.setSeed(seed);
+        random = new Random(seed);
     }
 
     @Override
