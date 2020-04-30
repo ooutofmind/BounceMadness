@@ -43,9 +43,11 @@ public class SimpleLevelGen implements LevelGen {
     private HoleEntity createHole() {
         HoleEntity lastHole = lastPlatform.hole;
         float newX;
+        int w;
         do {
             newX = lastHole.x + genShift();
-        } while (newX < 0 || newX > Const.WIDTH);
+            w = genHoleWidth();
+        } while (newX < 0 || newX + w> Const.WIDTH);
 
         platformYOffset += 100;
 
@@ -68,7 +70,7 @@ public class SimpleLevelGen implements LevelGen {
 
         directionCountDown--;
 
-        return direction * getRandomIntBetween(HoleEntity.MIN_WIDTH/2, HoleEntity.MIN_WIDTH*2);
+        return direction * getRandomIntBetween(HoleEntity.MIN_WIDTH / 2, HoleEntity.MIN_WIDTH * 2);
     }
 
     private int getRandomIntBetween(int min, int max) {
