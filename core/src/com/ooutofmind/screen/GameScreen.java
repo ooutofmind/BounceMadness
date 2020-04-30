@@ -42,9 +42,6 @@ public class GameScreen extends AbsScreen {
     }
 
     public void render(ShapeRenderer shapeRenderer, Camera camera) {
-
-
-
         camera.position.y = b.minY;
 
         camera.update();

@@ -3,6 +3,7 @@ package com.ooutofmind.level;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.ooutofmind.Const;
 import com.ooutofmind.entity.Entity;
+import com.ooutofmind.entity.Platform;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -38,7 +39,14 @@ public class Level {
         for (Iterator<Entity> it = entities.iterator(); it.hasNext(); ) {
             Entity e = it.next();
 
-            if (!e.removed) e.tick();
+            if (!e.removed) {
+                e.tick();
+                if (e instanceof Platform && e.y < yOffset - Const.HEIGHT / 2) {
+                    System.out.println("Sorry.. Please get out of here");
+                    e.removed = true;
+                }
+            }
+
             if (e.removed) {
                 it.remove();
             }
