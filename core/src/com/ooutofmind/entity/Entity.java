@@ -16,6 +16,7 @@ public abstract class Entity {
     public float bounce = 0.98f; //TODO bounce should be depended on surface
     public Level level;
     public boolean removed = false;
+    public boolean onGround = false;
 
     public Entity(float x, float y) {
         this.x = x;
@@ -29,8 +30,8 @@ public abstract class Entity {
     }
 
     public void attemptMove() {
+        onGround = false;
         int xSteps = (int) Math.abs(xa * 100) + 1;
-
         for (int i = xSteps; i >= 0; i--) {
             if (canMove(xa * i / (float) xSteps, 0)) {
                 x += xa * i / (float) xSteps;
@@ -39,31 +40,36 @@ public abstract class Entity {
                 xa *= -bounce;
             }
         }
-
         int ySteps = (int) Math.abs(ya * 100) + 1;
         for (int i = ySteps; i >= 0; i--) {
             if (canMove(0, ya * i / (float) ySteps)) {
                 y += ya * i / (float) ySteps;
                 break;
             } else {
+                if (ya > 0) onGround = true;
                 ya *= -bounce;
             }
         }
-
         xa *= 0.97; //friction
         ya *= 0.97; //friction
         ya += level.gravity;
     }
 
     protected boolean canMove(float xxa, float yya) {
-        float x0 = x + xxa - w / 2;
-        float x1 = x + xxa + w / 2;
-        float y0 = y + yya - h / 2;
-        float y1 = y + yya + h / 2;
+        float xr = w / 2;
+        float yr = h / 2;
+        float x0 = x + xxa - xr;
+        float x1 = x + xxa + xr;
+        float y0 = y + yya - yr;
+        float y1 = y + yya + yr;
 
-        List<Entity> intersects = level.getEntities(this, x0, y0, x1, y1, e -> e instanceof Platform);
+        List<Entity> wasIntersectEntities = level.getEntities(this, x - xr, y - yr, x + xr, y + yr, null);
 
-        for (Entity e : intersects) {
+        List<Entity> intersectEntities = level.getEntities(this, x0, y0, x1, y1, null);
+
+        intersectEntities.removeAll(wasIntersectEntities);
+
+        for (Entity e : intersectEntities) {
             e.touchedBy(this);
             this.touch(e);
             if (e.blocks(this)) {
