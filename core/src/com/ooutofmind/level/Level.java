@@ -1,6 +1,7 @@
 package com.ooutofmind.level;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.ooutofmind.Const;
 import com.ooutofmind.entity.Entity;
 
 import java.util.ArrayList;
@@ -14,6 +15,8 @@ public class Level {
     public int xOffset = 0;
     public int yOffset = 0;
 
+    private SimpleLevelGen levelGen = new SimpleLevelGen();
+
     public void setOffset(int xOffset, int yOffset) {
         this.xOffset = xOffset;
         this.yOffset = yOffset;
@@ -25,6 +28,13 @@ public class Level {
     }
 
     public void tick() {
+        if (yOffset == 0 || yOffset + Const.HEIGHT / 2 > levelGen.getYOffset()) {
+            System.out.println("WELL, Let's generate");
+            levelGen.getNextBlockChunk(1)
+                    .forEach(this::addEntity);
+
+        }
+
         for (Iterator<Entity> it = entities.iterator(); it.hasNext(); ) {
             Entity e = it.next();
 

@@ -71,7 +71,7 @@ public abstract class Entity {
             }
         }
 
-        return !(y1 > Const.HEIGHT) && !(x0 < 0) && !(x1 > Const.WIDTH);
+        return !(x0 < 0) && !(x1 > Const.WIDTH);
     }
 
     public void touchedBy(Entity e) {

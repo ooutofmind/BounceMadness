@@ -60,9 +60,7 @@ public class BounceMadness extends Game {
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            gameCamera.update();
-            shapeRenderer.setProjectionMatrix(gameCamera.combined);
-            ((AbsScreen) screen).render(shapeRenderer);
+            ((AbsScreen) screen).render(shapeRenderer, gameCamera);
         }
         backBuffer.end();
 
