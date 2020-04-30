@@ -13,7 +13,7 @@ public class SimpleLevelGen implements LevelGen {
     private final Random random = new Random();
     private int directionCountDown;
     private int direction = 0;
-    private int platformYOffset = 100;
+    private int platformYOffset = 0;
     private Platform lastPlatform;
 
     @Override
@@ -35,6 +35,11 @@ public class SimpleLevelGen implements LevelGen {
         return generated;
     }
 
+    @Override
+    public int getYOffset() {
+        return this.platformYOffset;
+    }
+
     private HoleEntity createHole() {
         HoleEntity lastHole = lastPlatform.hole;
         float newX;
@@ -42,7 +47,9 @@ public class SimpleLevelGen implements LevelGen {
             newX = lastHole.x + genShift();
         } while (newX < 0 || newX > Const.WIDTH);
 
-        return new HoleEntity(newX, lastHole.y + platformYOffset, genHoleWidth());
+        platformYOffset += 100;
+
+        return new HoleEntity(newX, platformYOffset, genHoleWidth());
     }
 
     private int genHoleWidth() {

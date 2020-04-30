@@ -8,9 +8,11 @@ import com.ooutofmind.gfx.Art;
 public class Ball extends Entity {
     public static final int MAX_SPEED = 9;
     public float bounce = 1f;
+    public float minY;
 
     public Ball(float x, float y) {
         super(x, y);
+        this.minY = y;
         this.w = Const.BALL_RADIUS * 2;
         this.h = Const.BALL_RADIUS * 2;
     }
@@ -27,6 +29,9 @@ public class Ball extends Entity {
             float yya = ya * i / (float) ySteps;
             if (canMove(0, yya)) {
                 y += yya;
+                if (minY < y) {
+                    minY = y;
+                }
                 break;
             } else {
                 ya = MAX_SPEED * -bounce;
