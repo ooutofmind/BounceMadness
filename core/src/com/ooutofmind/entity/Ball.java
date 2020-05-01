@@ -7,7 +7,6 @@ import com.ooutofmind.gfx.Art;
 
 public class Ball extends Entity {
     public static final int MAX_SPEED = 9;
-    public float bounce = 1f;
     public float minY;
 
     public Ball(float x, float y) {
@@ -15,30 +14,22 @@ public class Ball extends Entity {
         this.minY = y;
         this.w = Const.BALL_RADIUS * 2;
         this.h = Const.BALL_RADIUS * 2;
+        this.bounce = 0.1f;
     }
 
 
     public void tick() {
         attemptMove();
+        if (minY < y) {
+            minY = y;
+        }
+        if (onGround) {
+            jump();
+        }
     }
 
-    @Override
-    public void attemptMove() {
-        int ySteps = (int) Math.abs(ya * 100) + 1;
-        for (int i = ySteps; i >= 0; i--) {
-            float yya = ya * i / (float) ySteps;
-            if (canMove(0, yya)) {
-                y += yya;
-                if (minY < y) {
-                    minY = y;
-                }
-                break;
-            } else {
-                ya = MAX_SPEED * -bounce;
-            }
-        }
-
-        ya += level.gravity;
+    public void jump() {
+        ya -= MAX_SPEED;
     }
 
     @Override
