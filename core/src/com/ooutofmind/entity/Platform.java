@@ -67,10 +67,10 @@ public class Platform extends Entity {
     public void render(ShapeRenderer shapeRenderer) {
 
         if (x0Hole < x1Hole) { //normal state
-            Art.quad(0, (int) hole.y, x0Hole, Const.BLOCK_HEIGHT, 1, Color.WHITE, shapeRenderer);
-            Art.quad(x1Hole, (int) hole.y, Const.WIDTH - x1Hole, Const.BLOCK_HEIGHT, 1, Color.WHITE, shapeRenderer);
+            Art.quad(0, (int) hole.y, x0Hole, Const.BLOCK_HEIGHT, 1, Color.GOLD, shapeRenderer);
+            Art.quad(x1Hole, (int) hole.y, Const.WIDTH - x1Hole, Const.BLOCK_HEIGHT, 1, Color.GOLD, shapeRenderer);
         } else { // two holes
-            Art.quad(x1Hole, (int) hole.y, x0Hole - x1Hole, Const.BLOCK_HEIGHT, 1, Color.WHITE, shapeRenderer);
+            Art.quad(x1Hole, (int) hole.y, x0Hole - x1Hole, Const.BLOCK_HEIGHT, 1, Color.GOLD, shapeRenderer);
         }
 
         entities.forEach(e -> e.render(shapeRenderer));
