@@ -12,7 +12,7 @@ import java.util.List;
 public class Level {
     private final List<Entity> entities = new ArrayList<>();
 
-    public float gravity = 0.98f;
+    public float gravity = 0.48f;
     public int xOffset = 0;
     public int yOffset = 0;
 
