@@ -5,6 +5,6 @@ public class Const {
     public static final int HEIGHT = WIDTH * 15 / 9;
     public static final int SCALE = 2;
 
-    public static final int BLOCK_HEIGHT = 16;
+    public static final int BLOCK_HEIGHT = 12;
     public static final int BALL_RADIUS = 13;
 }
