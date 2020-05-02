@@ -14,7 +14,7 @@ public class Ball extends Entity {
         this.minY = y;
         this.w = Const.BALL_RADIUS * 2 * 0.8f;
         this.h = Const.BALL_RADIUS * 2 * 0.8f;
-        this.bounce = 0.1f;
+        this.bounce = 0.25f;
     }
 
 
