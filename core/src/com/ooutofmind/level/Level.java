@@ -1,9 +1,11 @@
 package com.ooutofmind.level;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.ooutofmind.Const;
 import com.ooutofmind.entity.Entity;
 import com.ooutofmind.entity.Platform;
+import com.ooutofmind.gfx.Art;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,7 +56,12 @@ public class Level {
     }
 
     public void render(final ShapeRenderer shapeRenderer) {
+
+
         entities.forEach(e -> e.render(shapeRenderer));
+
+        Art.quad(0, yOffset-Const.HEIGHT/2, 10, Const.HEIGHT, 1, Color.GRAY, shapeRenderer);
+        Art.quad(Const.WIDTH-10, yOffset-Const.HEIGHT/2, 10, Const.HEIGHT, 1, Color.GRAY, shapeRenderer);
     }
 
     public interface EntityFilter {

@@ -12,8 +12,8 @@ public class Ball extends Entity {
     public Ball(float x, float y) {
         super(x, y);
         this.minY = y;
-        this.w = Const.BALL_RADIUS * 2;
-        this.h = Const.BALL_RADIUS * 2;
+        this.w = Const.BALL_RADIUS * 2 * 0.8f;
+        this.h = Const.BALL_RADIUS * 2 * 0.8f;
         this.bounce = 0.1f;
     }
 

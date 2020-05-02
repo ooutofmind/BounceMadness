@@ -1,7 +1,9 @@
 package com.ooutofmind.entity;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.ooutofmind.Const;
+import com.ooutofmind.gfx.Art;
 import com.ooutofmind.gfx.BB;
 import com.ooutofmind.level.Level;
 
@@ -11,27 +13,20 @@ import java.util.List;
 public class Platform extends Entity {
     public HoleEntity hole;
     public List<BlockEntity> entities = new ArrayList<>();
-    public BlockEntity left;
-    public BlockEntity right;
 
-    public BB bb = BB.get();
+    int x0Hole;
+    int x1Hole;
 
     public Platform(HoleEntity hole) {
         super(0, hole.y);
 
         this.h = hole.h;
         this.hole = hole;
-
-        left = new BlockEntity(0, y, (int) hole.x);
-        right = new BlockEntity(hole.x + hole.w, y, Const.WIDTH - (int) (hole.x + hole.w));
     }
 
     @Override
     public void init(Level level) {
         super.init(level);
-
-        left.init(level);
-        right.init(level);
 
         entities.forEach(e -> e.init(level));
     }
@@ -43,40 +38,40 @@ public class Platform extends Entity {
 
     @Override
     public void tick() {
+        x0Hole = normalizeCoordinate((int) (hole.x + level.xOffset));
+        x1Hole = normalizeCoordinate((int) (x0Hole + hole.w));
+    }
 
+    private int normalizeCoordinate(int coord) {
+        while (coord < 0) coord += Const.WIDTH;
+        while (coord >= Const.WIDTH) coord -= Const.WIDTH;
+        return coord;
     }
 
     @Override
     public boolean intersects(float x0, float y0, float x1, float y1) {
-        this.bb = BB.get();
 
-        boolean intersects;
+        boolean result;
 
-        for (Entity e : entities) {
-            intersects = bbOf(e).intersects(x0, y0, x1, y1);
-            if (intersects) return true;
+        if (x0Hole < x1Hole) { //normal state
+            result = BB.get().set(0, hole.y, x0Hole, hole.y + Const.BLOCK_HEIGHT).intersects(x0, y0, x1, y1);
+            result |= BB.get().set(x1Hole, hole.y, Const.WIDTH, hole.y + Const.BLOCK_HEIGHT).intersects(x0, y0, x1, y1);
+        } else { // two holes
+            result = BB.get().set(x1Hole, hole.y, x0Hole, hole.y + Const.BLOCK_HEIGHT).intersects(x0, y0, x1, y1);
         }
 
-        intersects = bbOf(left).intersects(x0, y0, x1, y1);
-        if (intersects) return true;
-
-        intersects = bbOf(right).intersects(x0, y0, x1, y1);
-        return intersects;
-    }
-
-    private BB bbOf(Entity e) {
-        bb = bb.identity();
-        float xx = e.x + level.xOffset;
-        float yy = e.y;
-        bb.add(xx, yy);
-        bb.add(xx + e.w, yy + e.h);
-        return bb;
+        return result;
     }
 
     @Override
     public void render(ShapeRenderer shapeRenderer) {
-        left.render(shapeRenderer);
-        right.render(shapeRenderer);
+
+        if (x0Hole < x1Hole) { //normal state
+            Art.quad(0, (int) hole.y, x0Hole, Const.BLOCK_HEIGHT, 1, Color.GOLD, shapeRenderer);
+            Art.quad(x1Hole, (int) hole.y, Const.WIDTH - x1Hole, Const.BLOCK_HEIGHT, 1, Color.GOLD, shapeRenderer);
+        } else { // two holes
+            Art.quad(x1Hole, (int) hole.y, x0Hole - x1Hole, Const.BLOCK_HEIGHT, 1, Color.GOLD, shapeRenderer);
+        }
 
         entities.forEach(e -> e.render(shapeRenderer));
     }

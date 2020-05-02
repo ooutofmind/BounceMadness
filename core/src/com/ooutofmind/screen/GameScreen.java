@@ -28,12 +28,12 @@ public class GameScreen extends AbsScreen {
     public void tick() {
         level.tick();
 
-        float scrollSpeed = 1.82f;
+        float scrollSpeed = -3.82f;//AS WE MANAGE PLATFORMS IT SHOULD BE SCROLL SPEED OF THE ONES
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) xOffsetA += scrollSpeed;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) xOffsetA -= scrollSpeed;
 
         xOffset += xOffsetA;
-        xOffsetA *= 0.77;
+        xOffsetA *= 0.33;
 
         level.setOffset((int) xOffset, (int)b.minY);
     }
